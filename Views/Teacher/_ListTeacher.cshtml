@@ -1,0 +1,100 @@
+@using Exam.Models;
+@model List<Teacher>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">DataTable with default features</h3>
+    </div>
+    <button onclick="onCreateTeacher()">Add teacher</button>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Department</th>
+                    <th>Address</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Teacher_Name</td>
+                        <td>@item.Teacher_Email</td>
+                        <td>@item.Teacher_ContactNo</td>
+                        <td> @item.Teacher_Department</td>
+                        <td>@item.Teacher_Address</td>
+                        <td>
+                            <button onclick="onEditTeacher(@item.Id)">Edit</button>
+                            <button onclick="onDeleteTeacher(@item.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<script>
+    function onEditTeacher(id) {
+        var url = "@Url.Action("Edit", "Teacher")";
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: { id: id },
+            dataType: "html",
+            success: function (data) {
+                $("#popupDetail").html(data);
+                $("#modalDetail").modal();
+            },
+            error: function (xhr) {
+                alert("error");
+            }
+        });
+}
+
+    function onCreateTeacher() {
+        var url = "@Url.Action("Create", "Teacher")";
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: null,
+            dataType: "html",
+            success: function (data) {
+                $("#popupDetail").html(data);
+                $("#modalDetail").modal();
+            },
+            error: function (xhr) {
+                alert("error");
+            }
+        });
+
+    }
+
+    function onDeleteTeacher(id) {
+        if (confirm("Do you want to delete this Teacher?")) {
+            var model = {id: id};
+            var url = "@Url.Action("Delete", "Teacher")";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (res) {
+                    GetListTeacher();
+                },
+                error: function (xhr) {
+                    alert("error");
+                }
+            });
+        }
+    }
+</script>
