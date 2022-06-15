@@ -2,9 +2,31 @@
 @model Teacher
 @{
     var IsEdit = ViewBag.IsEdit;
-
+    var listTeacher = new List<Teacher>();
+    listTeacher = (List<Teacher>)ViewBag.Teachers;
 }
 
+<style>
+    #ddlColor select {
+        color: black;
+    }
+
+        #ddlColor select option[value="#008000"] {
+            background: #008000;
+        }
+
+        #ddlColor select option[value="#FFFF00"] {
+            background: #FFFF00;
+        }
+
+        #ddlColor select option[value="#FF0000"] {
+            background: #FF0000;
+        }
+
+        #ddlColor select option[value="#800080"] {
+            background: #800080;
+        }
+</style>
 <div class="modal fade" id="modalDetail" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -30,6 +52,7 @@
                         <div class="col-sm-9">
                             @Html.EditorFor(model => model.Teacher_Name, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Teacher_Name, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <div class="row form-group">
@@ -57,12 +80,17 @@
 
                     <div class="row form-group">
                         <div class="col-sm-3"><b>Address</b></div>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Teacher_Address, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Teacher_Address, "", new { @class = "text-danger" })
+                        <div class="col-sm-9 " id="ddlColor">
+                            @*@Html.EditorFor(model => model.Teacher_Address, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                            @Html.DropDownList("Teacher_Address", (List<SelectListItem>)ViewBag.Color, new { @class = "form-control" })
+
+
+                            @*@Html.ValidationMessageFor(model => model.Teacher_Address, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
                 </form>
+
 
             </div>
             <div class="modal-footer justify-content-between">
@@ -87,6 +115,8 @@
         $("#saveBtn").attr("disabled", true);
         var original = $("#formTeacher").serialize();
         onFieldChange(original);
+
+
     });
 
     function onFieldChange(original) {

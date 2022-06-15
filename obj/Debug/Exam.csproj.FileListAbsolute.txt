@@ -256,3 +256,4 @@ C:\Users\duong.ht99_3si\Desktop\Exam\obj\Debug\Exam.pdb
 C:\Users\duong.ht99_3si\Desktop\Exam\obj\Debug\Exam.Migrations.Create_person_table.resources
 C:\Users\duong.ht99_3si\Desktop\Exam\obj\Debug\Exam.Migrations.Create_teacher_table.resources
 C:\Users\duong.ht99_3si\Desktop\Exam\obj\Debug\Exam.Migrations.update_teacher_table.resources
+C:\Users\duong.ht99_3si\Desktop\Exam\bin\ActionPlanCostDetail_Color.xml

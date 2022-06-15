@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Creating an XML Tree using LINQ to XML-->
+<Colors>
+	<Color Key="#008000" Value="Xanh"/>
+	<Color Key="#FFFF00" Value="Vàng"/>
+	<Color Key="#FF0000" Value="Đỏ"/>
+	<Color Key="#800080" Value="Tím"/>
+</Colors>

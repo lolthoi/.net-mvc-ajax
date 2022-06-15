@@ -1,8 +1,14 @@
 ﻿using Exam.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Exam.Controllers
 {
@@ -10,7 +16,6 @@ namespace Exam.Controllers
     {
         private MyDBContext db = new MyDBContext();
 
-        // GET: Teacher
         public ActionResult Index()
         {
             return View();
@@ -18,12 +23,10 @@ namespace Exam.Controllers
 
         public ActionResult GetAllTeacher()
         {
-            //var teachers = new List<Teacher>();
             var teachers = db.Teachers.ToList();
             return PartialView("_ListTeacher", teachers);
         }
 
-        // GET: Teacher/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,16 +41,33 @@ namespace Exam.Controllers
             return View(teacher);
         }
 
-        // GET: Teacher/Create
         public ActionResult Create()
         {
             ViewBag.IsEdit = false;
+            var fileName = "ActionPlanCostDetail_Color.xml";
+            var url = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+            var pathCombine = Path.Combine(url, fileName);
+
+            XElement xDocument = XElement.Load(pathCombine);
+
+            var data = xDocument.Descendants("Color").Select(x => new
+            {
+                Value = x.Attribute("Key").Value,
+                Text = x.Attribute("Value").Value,
+            }).ToList();
+
+            List<SelectListItem> itemlist = new List<SelectListItem>();
+
+            foreach (var item in data)
+            {
+                itemlist.Add(new SelectListItem() { Text = item.Text, Value = item.Value });
+            }
+
+            ViewBag.Color = itemlist;
+
             return PartialView("_DetailTeacher", new Teacher());
         }
 
-        // POST: Teacher/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Teacher teacher)
@@ -61,7 +81,6 @@ namespace Exam.Controllers
             return Json(false);
         }
 
-        // GET: Teacher/Edit/5
         public ActionResult Edit(int? id)
         {
             ViewBag.IsEdit = true;
@@ -77,9 +96,6 @@ namespace Exam.Controllers
             return PartialView("_DetailTeacher", teacher);
         }
 
-        // POST: Teacher/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Teacher teacher)

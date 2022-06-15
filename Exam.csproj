@@ -149,6 +149,7 @@
       <DependentUpon>202206100501112_update_teacher_table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Common\SearchParam.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\MyDBContext.cs" />
     <Compile Include="Models\Person.cs" />
@@ -156,6 +157,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ActionPlanCostDetail_Color.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\dist\css\adminlte.css" />
     <Content Include="Content\dist\css\adminlte.min.css" />
     <Content Include="Content\dist\css\alt\adminlte.components.css" />
